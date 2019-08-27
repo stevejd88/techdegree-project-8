@@ -23,10 +23,11 @@ function generateHTML(data) {
    data.results.forEach(person => {
      const section = document.createElement('section');
      employeeList.appendChild(section);
-     html= `<div class="well">
-     <span>${person.name.title}  ${person.name.first} ${person.name.last}</span>
-     <span>(${person.nat})</span>
+     html= `<div class="card">
+     <img src="${person.picture.medium}" alt="${person.name.first} ${person.name.last}">
+     <span>${person.name.first} ${person.name.last}</span>
      <span>Email: ${person.email}</span>
+     <span>${person.location}</span>
      </div>`;
      console.log(html);
      section.innerHTML = html;

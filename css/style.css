@@ -6,3 +6,7 @@ html,
 body {
   min-height: 100%;
 }
+
+p {
+  color: red;
+}

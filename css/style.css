@@ -7,6 +7,59 @@ body {
   min-height: 100%;
 }
 
-p {
-  color: red;
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+h1 {
+  font-size: 20px;
+}
+
+.card {
+  border: 1px solid black;
+  display: flex;
+  margin: auto;
+  margin-bottom: 20px;
+  max-width: 95%;
+}
+
+img {
+  border-radius: 50px;
+  max-height: 50px;
+  max-width: 50px;
+  margin: auto;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+h2 {
+  font-size: 14px;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+}
+
+span {
+  font-size: 12px;
+}
+
+span:nth-child(2n) {
+  margin-bottom: 2px;
+}
+
+span:nth-child(3n) {
+  text-transform: capitalize;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+
+
+
+
+/* 'sm': 320px,
+'md': 768px,
+'lg': 1024px, */

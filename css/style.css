@@ -14,6 +14,7 @@ body {
 
 h1 {
   font-size: 20px;
+  text-transform: uppercase;
 }
 
 section {
@@ -28,7 +29,7 @@ section {
 
 .card {
   display: flex;
-  justify-content: center;
+  align-items: center;
 }
 
 img {
@@ -38,6 +39,7 @@ img {
   margin-top: auto;
   margin-bottom: auto;
   margin-right: 10px;
+  margin-left: 15px;
 }
 
 h2 {
@@ -62,6 +64,7 @@ span:nth-child(3n) {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  word-break: break-all;
 }
 
 @media (min-width: 768px) {
@@ -71,7 +74,7 @@ span:nth-child(3n) {
     justify-content: space-evenly;
   }
 
-  section{
+  section {
     max-width: 45%;
     flex: 0 1 45%;
   }
@@ -85,6 +88,18 @@ span:nth-child(3n) {
     max-width: 80px;
     margin-right: 15px;
   }
+}
+
+@media (min-width: 1024px) {
+  section {
+    max-width: 30%;
+    flex: 0 1 30%;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
 }
 
 

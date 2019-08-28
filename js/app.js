@@ -1,6 +1,6 @@
 const randomUsers = 'https://randomuser.me/api/';
 const employeeList = document.getElementById('employeeDirectory');
-
+let info = [];
 
 function fetchData(url) {
   return fetch(url)
@@ -15,7 +15,7 @@ Promise.all([
 ])
 .then(data => {
   const employees = data[0];
-
+  info = employees;
   generateHTML(employees);
 })
 
@@ -48,20 +48,21 @@ const modal = document.getElementById("myModal");
 // Get the card that opens the modal
 const card = document.querySelector('.card');
 // Get the <span> element that closes the modal
-const span = document.getElementsByClassName("close")[0];
+const span = document.querySelector('.modal-content');
+
 
 
 // When the user clicks on the card, open the modal
 document.addEventListener('click', (e) => {
   const cardClick = e.target;
-  if (e.target.tagName === 'SECTION' || 'IMG' || 'SPAN') {
+  if (e.target.tagName === 'SECTION' || 'IMG') {
     modal.style.display = "block";
   }
 });
 
 // When the user clicks on <span> (x), close the modal
 span.addEventListener('click', (e) => {
-  if (e.target.className === 'close') {
+  if (e.target.tagName === 'BUTTON') {
     modal.style.display = "none";
   }
 })

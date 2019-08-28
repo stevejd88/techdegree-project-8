@@ -33,7 +33,42 @@ function generateHTML(data) {
      </div>`;
      console.log(html);
      section.innerHTML = html;
-
-     // return data;
    });
+}
+
+
+
+
+
+//-----------------------------
+// MODAL CODE
+//-----------------------------
+// Get the modal
+const modal = document.getElementById("myModal");
+// Get the card that opens the modal
+const card = document.querySelector('.card');
+// Get the <span> element that closes the modal
+const span = document.getElementsByClassName("close")[0];
+
+
+// When the user clicks on the card, open the modal
+document.addEventListener('click', (e) => {
+  const cardClick = e.target;
+  if (e.target.tagName === 'SECTION' || 'IMG' || 'SPAN') {
+    modal.style.display = "block";
+  }
+});
+
+// When the user clicks on <span> (x), close the modal
+span.addEventListener('click', (e) => {
+  if (e.target.className === 'close') {
+    modal.style.display = "none";
+  }
+})
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
 }

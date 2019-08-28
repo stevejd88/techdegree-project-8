@@ -24,7 +24,7 @@ function generateHTML(data) {
      const section = document.createElement('section');
      employeeList.appendChild(section);
      html= `<div class="card">
-     <img src="${person.picture.medium}" alt="${person.name.first} ${person.name.last}">
+     <img src="${person.picture.large}" alt="${person.name.first} ${person.name.last}">
      <div class="info">
        <h2>${person.name.first} ${person.name.last}</h2>
        <span>${person.email}</span>

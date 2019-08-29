@@ -21,16 +21,19 @@ Promise.all([
   const employees = data[0];
   generateHTML(employees);
 })
+// .then( data =>  {
+//     return info = data;
+// });
 
 // ---------------------------------------------------------------------------
 // FUNCTION CREATING HTML FROM DATA IN API REQUEST
 // ---------------------------------------------------------------------------
 function generateHTML(data) {
-   info = data;
+   info = data.results;
    data.results.forEach(person => {
      const section = document.createElement('section');
      employeeList.appendChild(section);
-     html= `<div class="card">
+     const html= `<div class="card">
      <img src="${person.picture.large}" alt="${person.name.first} ${person.name.last}">
      <div class="info">
        <h2>${person.name.first} ${person.name.last}</h2>
@@ -53,29 +56,42 @@ const modal = document.getElementById("myModal");
 // Get the card that opens the modal
 const card = document.querySelector('.card');
 // Get the <span> element that closes the modal
-const span = document.querySelector('.modal-content');
-const userDisplay = info
-  .map(person => person.name);
+const modalContent = document.querySelector('.modal-content');
 
-// function modalUser() {
-//   userDisplay = info
-//     .map(user => user.name.first);
+// const birthday = function() {
+//   const day = info[0].dob.date;
+//   console.log(day);
 // }
+
+const displayModal = () => {
+    modal.style.display = "block";
+    modalContent.innerHTML =
+        `<div class="modalUser">
+            <img src="${info[0].picture.large}" alt="${info[0].name.first} ${info[0].name.last}">
+            <p>${info[0].name.first} ${info[0].name.last}<p>
+            <p>${info[0].email}</p>
+            <p>${info[0].location.city}</p>
+            <hr>
+            <p>${info[0].phone}</p>
+            <p>${info[0].location.street} , ${info[0].location.state} ${info[0].location.postcode}</p>
+        </div>`;
+}
+
 
 // When the user clicks on the card, open the modal
 document.addEventListener('click', (e) => {
   const cardClick = e.target;
   if (e.target.tagName === 'SECTION' || 'IMG') {
-    modal.style.display = "block";
+    displayModal();
   }
 });
 
-// When the user clicks on <span> (x), close the modal
-span.addEventListener('click', (e) => {
-  if (e.target.tagName === 'BUTTON') {
-    modal.style.display = "none";
-  }
-})
+// // When the user clicks on <span> (x), close the modal
+// span.addEventListener('click', (e) => {
+//   if (e.target.tagName === 'BUTTON') {
+//     modal.style.display = "none";
+//   }
+// })
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {

@@ -1,5 +1,6 @@
 const randomUsers = 'https://randomuser.me/api/';
 const employeeList = document.getElementById('employeeDirectory');
+let employees = [];
 let info = [];
 
 // ---------------------------------------------------------------------------
@@ -18,7 +19,7 @@ Promise.all([
   /// INSERT MORE FETCH REQUESTS HERE
 ])
 .then(data => {
-  const employees = data[0];
+  employees = data[0];
   generateHTML(employees);
 })
 // .then( data =>  {
@@ -65,25 +66,29 @@ const modalContent = document.querySelector('.modal-content');
 
 const displayModal = () => {
     modal.style.display = "block";
-    modalContent.innerHTML =
-        `<div class="modalUser">
-            <img src="${info[0].picture.large}" alt="${info[0].name.first} ${info[0].name.last}">
-            <p>${info[0].name.first} ${info[0].name.last}<p>
-            <p>${info[0].email}</p>
-            <p>${info[0].location.city}</p>
-            <hr>
-            <p>${info[0].phone}</p>
-            <p>${info[0].location.street} , ${info[0].location.state} ${info[0].location.postcode}</p>
-        </div>`;
+    for (let i = 0; i < info.length; i++) {
+        modalContent.innerHTML =
+          `<div class="modalUser">
+              <img src="${info[i].picture.large}" alt="${info[i].name.first} ${info[i].name.last}">
+              <p>${info[i].name.first} ${info[i].name.last}<p>
+              <p>${info[i].email}</p>
+              <p>${info[i].location.city}</p>
+              <hr>
+              <p>${info[i].phone}</p>
+              <p>${info[i].location.street} , ${info[i].location.state} ${info[i].location.postcode}</p>
+          </div>`;
+    }
 }
-
 
 // When the user clicks on the card, open the modal
 document.addEventListener('click', (e) => {
-  const cardClick = e.target;
-  if (e.target.tagName === 'SECTION' || 'IMG') {
+  if (e.target.className === 'card' || e.target.className === 'info'){
     displayModal();
-  }
+  } else if(e.target.tagName === 'IMG' || e.target.tagName==='H2' || e.target.tagName==='SPAN'){
+    displayModal();
+  } else {
+      modal.style.display = "none";
+    }
 });
 
 // // When the user clicks on <span> (x), close the modal
@@ -99,5 +104,3 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-
-console.log(info);

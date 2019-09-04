@@ -62,19 +62,19 @@ const modalContent = document.querySelector('.modal-content');
 // }
 function createModals() {
   for (let i = 0; i < info.length; i++) {
-    const section = document.createElement('section');
-    modalContent.appendChild(section);
+    const div = document.createElement('div');
+    div.className = `'modalUser-${i}`;
+    modalContent.appendChild(div);
     const html =
-      `<div class="modalUser">
-          <img src="${info[i].picture.large}" alt="${info[i].name.first} ${info[i].name.last}">
+        `<img src="${info[i].picture.large}" alt="${info[i].name.first} ${info[i].name.last}">
           <p>${info[i].name.first} ${info[i].name.last}<p>
           <p>${info[i].email}</p>
           <p>${info[i].location.city}</p>
           <hr>
           <p>${info[i].phone}</p>
           <p>${info[i].location.street} , ${info[i].location.state} ${info[i].location.postcode}</p>
-      </div>`;
-      section.innerHTML = html;
+        `;
+      div.innerHTML = html;
   }
 };
 
@@ -82,6 +82,17 @@ function displayModal() {
   modal.style.display = "block";
   createModals();
 }
+
+// function displayModal() {
+//   modal.style.display = "block";
+//   const user = modalContent.children;
+//   createModals();
+//   for (let i = 0; i < modalContent.length; i++) {
+//     if (indexOf(modalContent[i]) === indexOf(employeeList[i])) {
+//       user[i].style.display = 'block';
+//     }
+//   }
+// }
 
 
 // When the user clicks on the card, open the modal

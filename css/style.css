@@ -90,9 +90,11 @@ span:nth-child(3n) {
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
-/* .modal-content section {
+.extra-info,
+.next,
+.previous {
   display: none;
-} */
+}
 
 
 /* MEDIA QUERIES */

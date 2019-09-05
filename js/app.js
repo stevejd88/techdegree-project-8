@@ -2,6 +2,8 @@ const randomUsers = 'https://randomuser.me/api/';
 const employeeList = document.getElementById('employeeDirectory');
 let employees = [];
 let info = [];
+let card = [];
+let users = [];
 
 // ---------------------------------------------------------------------------
 // FETCH FUNCTION
@@ -33,16 +35,27 @@ function generateHTML(data) {
   for (let i = 0; i < info.length; i++) {
      const section = document.createElement('section');
      employeeList.appendChild(section);
-     const html = `<div class="card" id="user-${[i]} ">
-     <img src="${info[i].picture.large}" alt="${info[i].name.first} ${info[i].name.last}">
-     <div class="info">
-       <h2>${info[i].name.first} ${info[i].name.last}</h2>
-       <span>${info[i].email}</span>
-       <span>${info[i].location.city}</span>
-     </div>
-     </div>`;
+     const html =
+     `
+         <div class="card" id="user-${[i]} ">
+           <img src="${info[i].picture.large}" alt="${info[i].name.first} ${info[i].name.last}">
+           <a href="#" class="previous">&laquo;</a>
+           <div class="info">
+             <h2>${info[i].name.first} ${info[i].name.last}</h2>
+             <span>${info[i].email}</span>
+             <span>${info[i].location.city}</span>
+           </div>
+           <a href="#" class="next">&raquo;</a>
+           <div class="extra-info">
+             <hr>
+             <p>${info[i].phone}</p>
+             <p>${info[i].location.street} , ${info[i].location.state} ${info[i].location.postcode}</p>
+            </div>
+         </div>
+     `;
      // console.log(html);
      section.innerHTML = html;
+     card.push(section);
    };
 }
 
@@ -53,54 +66,27 @@ function generateHTML(data) {
 // Get the modal
 const modal = document.getElementById("myModal");
 // Get the card that opens the modal
-const card = document.querySelector('.card');
 const modalContent = document.querySelector('.modal-content');
-
-// const birthday = function() {
-//   const day = info[0].dob.date;
-//   console.log(day);
-// }
-function createModals() {
-  for (let i = 0; i < info.length; i++) {
-    const div = document.createElement('div');
-    div.className = `'modalUser-${i}`;
-    modalContent.appendChild(div);
-    const html =
-        `<img src="${info[i].picture.large}" alt="${info[i].name.first} ${info[i].name.last}">
-          <p>${info[i].name.first} ${info[i].name.last}<p>
-          <p>${info[i].email}</p>
-          <p>${info[i].location.city}</p>
-          <hr>
-          <p>${info[i].phone}</p>
-          <p>${info[i].location.street} , ${info[i].location.state} ${info[i].location.postcode}</p>
-        `;
-      div.innerHTML = html;
-  }
-};
-
-function displayModal() {
-  modal.style.display = "block";
-  createModals();
-}
-
-// function displayModal() {
-//   modal.style.display = "block";
-//   const user = modalContent.children;
-//   createModals();
-//   for (let i = 0; i < modalContent.length; i++) {
-//     if (indexOf(modalContent[i]) === indexOf(employeeList[i])) {
-//       user[i].style.display = 'block';
-//     }
-//   }
-// }
 
 
 // When the user clicks on the card, open the modal
 document.addEventListener('click', (e) => {
-  if (e.target.className === 'card' || e.target.className === 'info'){
-    displayModal();
-  } else if(e.target.tagName === 'IMG' || e.target.tagName==='H2' || e.target.tagName==='SPAN'){
-    displayModal();
+  modal.style.display = "block";
+  if (e.target.className === 'info' || e.target.tagName === 'IMG') {
+      modalContent.innerHTML = e.target.parentNode.innerHTML;
+      modalContent.children[4].style.display= "block";
+      modalContent.children[1].style.display= "inline";
+      modalContent.children[3].style.display= "inline";
+  } else if( e.target.tagName === 'H2' || e.target.tagName === 'SPAN') {
+      modalContent.innerHTML = e.target.parentNode.parentNode.innerHTML;
+      modalContent.children[4].style.display= "block";
+      modalContent.children[1].style.display= "inline";
+      modalContent.children[3].style.display= "inline";
+  } else if (e.target.className === 'card' ) {
+      modalContent.innerHTML = e.target.innerHTML;
+      modalContent.children[4].style.display= "block";
+      modalContent.children[1].style.display= "inline";
+      modalContent.children[3].style.display= "inline";
   } else {
       modal.style.display = "none";
     }

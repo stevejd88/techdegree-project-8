@@ -1,13 +1,10 @@
 const randomUsers = 'https://randomuser.me/api/';
 const employeeList = document.getElementById('employeeDirectory');
+let section;
 let employees = [];
-let info = [];
 let card = [];
-let users = [];
-const gridItem= employeeList.children;
 
-const firstEmployee = gridItem[0];
-const lastEmployee = card[11];
+
 
 // ---------------------------------------------------------------------------
 // FETCH FUNCTION
@@ -37,11 +34,10 @@ function generateHTML(data) {
   info = data.results;
 
   for (let i = 0; i < info.length; i++) {
-     const section = document.createElement('section');
+     section = document.createElement('section');
      employeeList.appendChild(section);
      const html =
      `
-         <div class="card" id="user-${[i]} ">
             <button title="close" type="button" class="close">&times;</button>
             <img src="${info[i].picture.large}" alt="${info[i].name.first} ${info[i].name.last}">
             <a href="#" class="previous">&laquo;</a>
@@ -56,53 +52,58 @@ function generateHTML(data) {
               <p>${info[i].phone}</p>
               <p>${info[i].location.street} , ${info[i].location.state} ${info[i].location.postcode}</p>
             </div>
-         </div>
      `;
      // console.log(html);
      section.innerHTML = html;
      card.push(section);
    };
+
 }
 
 
 //------------------------------------------------------------------
 // MODAL CODE
 //------------------------------------------------------------------
-// Get the modal
 const modal = document.getElementById("myModal");
-// Get the card that opens the modal
 const modalContent = document.querySelector('.modal-content');
 
+// DISPLAYING EXTRA INFO TO THE MODAL
+function extraInfo() {
+  modal.style.display = "block";
+  modalContent.children[0].style.display= "block";
+  modalContent.children[5].style.display= "block";
+  modalContent.children[2].style.display= "inline";
+  modalContent.children[3].style.display= "inline";
+}
 
-// When the user clicks on the card, open the modal
+
+// MODAL POPUP WHEN USER CLICKS ON CARD
 document.addEventListener('click', (e) => {
   if (e.target.className === 'info' || e.target.tagName === 'IMG') {
-      modal.style.display = "block";
       modalContent.innerHTML = e.target.parentNode.innerHTML;
-      modalContent.children[0].style.display= "block";
-      modalContent.children[5].style.display= "block";
-      modalContent.children[2].style.display= "inline";
-      modalContent.children[3].style.display= "inline";
+      extraInfo();
   } else if( e.target.tagName === 'H2' || e.target.tagName === 'SPAN') {
-      modal.style.display = "block";
       modalContent.innerHTML = e.target.parentNode.parentNode.innerHTML;
-      modalContent.children[0].style.display= "block";
-      modalContent.children[5].style.display= "block";
-      modalContent.children[2].style.display= "inline";
-      modalContent.children[3].style.display= "inline";
-  } else if (e.target.className === 'card' ) {
-      modal.style.display = "block";
+      extraInfo();
+  } else if (e.target.tagName === 'SECTION' ) {
       modalContent.innerHTML = e.target.innerHTML;
-      modalContent.children[0].style.display= "block";
-      modalContent.children[5].style.display= "block";
-      modalContent.children[2].style.display= "inline";
-      modalContent.children[3].style.display= "inline";
+      extraInfo();
+  }
+});
+
+// NEXT BUTTON EVENT HANDLER
+document.addEventListener('click', (e) => {
+  if (e.target.className === 'next') {
+    // console.log(card[0].nextElementSibling.innerHTML);
+    for (let i = 0; i < card.length; i++) {
+        modalContent.innerHTML = card[i].nextSibling.innerHTML;
+        extraInfo();
+    }
   }
 });
 
 
-
-// When the user clicks anywhere outside of the modal, close it
+// CLOSING THE MODAL
 window.onclick = function(event) {
   if (event.target.tagName === 'BUTTON') {
     modal.style.display = "none";

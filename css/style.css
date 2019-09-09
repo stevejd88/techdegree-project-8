@@ -17,6 +17,24 @@ h1 {
   text-transform: uppercase;
 }
 
+header {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-bar {
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.searchField {
+  background-color: #ffffff;
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 5px;
+  width: 200px;
+}
+
 section {
   background-color: #ffffff;
   border: 1px solid black;
@@ -143,6 +161,10 @@ span:nth-child(3n) {
 
 /* MEDIA QUERIES */
 @media (min-width: 768px) {
+  .searchField {
+    width: 200px;
+  }
+
   #employeeDirectory {
     display: flex;
     flex-wrap: wrap;
@@ -168,6 +190,23 @@ span:nth-child(3n) {
 }
 
 @media (min-width: 1024px) {
+  header {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .search-bar {
+    margin-top: 15px;
+  }
+
+  .searchField {
+    width: 300px;
+    padding: 5px;
+    font-size: 14px;
+  }
+
   section {
     max-width: 30%;
     flex: 0 1 30%;

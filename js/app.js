@@ -1,10 +1,8 @@
 const randomUsers = 'https://randomuser.me/api/';
 const employeeList = document.getElementById('employeeDirectory');
-let section;
 let employees = [];
-let card = [];
-
-
+let info = [];
+let index;
 
 // ---------------------------------------------------------------------------
 // FETCH FUNCTION
@@ -34,30 +32,21 @@ function generateHTML(data) {
   info = data.results;
 
   for (let i = 0; i < info.length; i++) {
-     section = document.createElement('section');
+     const section = document.createElement('section');
+     section.className = 'employeeContainer';
+     section.setAttribute("data-index", i);
      employeeList.appendChild(section);
-     const html =
-     `
-            <button title="close" type="button" class="close">&times;</button>
-            <img src="${info[i].picture.large}" alt="${info[i].name.first} ${info[i].name.last}">
-            <a href="#" class="previous">&laquo;</a>
-            <a href="#" class="next">&raquo;</a>
-            <div class="info">
-              <h2>${info[i].name.first} ${info[i].name.last}</h2>
-              <span>${info[i].email}</span>
-              <span>${info[i].location.city}</span>
-            </div>
-            <div class="extra-info">
-              <hr>
-              <p>${info[i].phone}</p>
-              <p>${info[i].location.street} , ${info[i].location.state} ${info[i].location.postcode}</p>
-            </div>
-     `;
+     const html = `<div class="card" id="user-${[i]} ">
+     <img src="${info[i].picture.large}" alt="${info[i].name.first} ${info[i].name.last}">
+     <div class="info">
+       <h2>${info[i].name.first} ${info[i].name.last}</h2>
+       <span>${info[i].email}</span>
+       <span>${info[i].location.city}</span>
+     </div>
+     </div>`;
      // console.log(html);
      section.innerHTML = html;
-     card.push(section);
    };
-
 }
 
 
@@ -67,40 +56,49 @@ function generateHTML(data) {
 const modal = document.getElementById("myModal");
 const modalContent = document.querySelector('.modal-content');
 
-// DISPLAYING EXTRA INFO TO THE MODAL
-function extraInfo() {
-  modal.style.display = "block";
-  modalContent.children[0].style.display= "block";
-  modalContent.children[5].style.display= "block";
-  modalContent.children[2].style.display= "inline";
-  modalContent.children[3].style.display= "inline";
+
+
+function getContainerIndex() {
+  const btn = event.target.closest('.employeeContainer');
+  index = btn.getAttribute("data-index");
+  if(index) {
+    createModal(index)
+  }
 }
+
+function createModal(index) {
+    let employee = info[index];
+    modalContent.innerHTML =
+    `
+           <button title="close" type="button" class="close">&times;</button>
+           <img src="${employee.picture.large}" alt="${employee.name.first} ${employee.name.last}">
+           <a href="#" class="previous">&laquo;</a>
+           <a href="#" class="next">&raquo;</a>
+           <div class="info">
+             <h2>${employee.name.first} ${employee.name.last}</h2>
+             <span>${employee.email}</span>
+             <span>${employee.location.city}</span>
+           </div>
+           <div class="extra-info">
+             <hr>
+             <p>${employee.phone}</p>
+             <p>${employee.location.street} , ${employee.location.state} ${employee.location.postcode}</p>
+           </div>
+    `;
+    modal.style.display = "block";
+};
+
 
 
 // MODAL POPUP WHEN USER CLICKS ON CARD
 document.addEventListener('click', (e) => {
-  if (e.target.className === 'info' || e.target.tagName === 'IMG') {
-      modalContent.innerHTML = e.target.parentNode.innerHTML;
-      extraInfo();
+  if (e.target.className === 'info' || e.target.tagName === 'IMG' || e.target.className === 'employeeContainer') {
+      createModal();
   } else if( e.target.tagName === 'H2' || e.target.tagName === 'SPAN') {
-      modalContent.innerHTML = e.target.parentNode.parentNode.innerHTML;
-      extraInfo();
-  } else if (e.target.tagName === 'SECTION' ) {
-      modalContent.innerHTML = e.target.innerHTML;
-      extraInfo();
+      createModal();
   }
 });
 
-// NEXT BUTTON EVENT HANDLER
-document.addEventListener('click', (e) => {
-  if (e.target.className === 'next') {
-    // console.log(card[0].nextElementSibling.innerHTML);
-    for (let i = 0; i < card.length; i++) {
-        modalContent.innerHTML = card[i].nextSibling.innerHTML;
-        extraInfo();
-    }
-  }
-});
 
 
 // CLOSING THE MODAL
@@ -110,3 +108,5 @@ window.onclick = function(event) {
     modalContent.innerHTML = '';
   }
 }
+
+employeeList.addEventListener('click', getContainerIndex)

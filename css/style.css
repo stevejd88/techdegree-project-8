@@ -137,6 +137,9 @@ span:nth-child(3n) {
   font-size: 12px;
 }
 
+.street {
+  text-transform: capitalize;
+}
 
 /* MEDIA QUERIES */
 @media (min-width: 768px) {

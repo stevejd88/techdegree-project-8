@@ -16,7 +16,7 @@ function fetchData(url) {
 }
 
 Promise.all([
-  fetchData('https://randomuser.me/api/?results=12')
+  fetchData('https://randomuser.me/api/?results=12&nat=us&info')
   /// INSERT MORE FETCH REQUESTS HERE
 ])
 .then(data => {
@@ -59,8 +59,8 @@ const modalContent = document.querySelector('.modal-content');
 
 // GETS INDEX OF CONTAINER CLICKED
 function getContainerIndex() {
-  const btn = event.target.closest('.employeeContainer');
-  index = btn.getAttribute("data-index");
+  const employeeDisplay = event.target.closest('.employeeContainer');
+  index = employeeDisplay.getAttribute("data-index");
   if(index) {
     createModal(index)
   }
@@ -68,23 +68,28 @@ function getContainerIndex() {
 
 // USES INDEX OF CONTAINER CLICKED TO UPDATE MODAL INFO
 function createModal(index) {
-    let employee = info[index];
-    modalContent.innerHTML =
+  let employee = info[index];
+  let date = new Date(employee.dob.date);
+  let day = date.getDate();
+  let year = date.getFullYear();
+  let month = date.getMonth() +1;
+  modalContent.innerHTML =
     `
-           <button title="close" type="button" class="close">&times;</button>
-           <img src="${employee.picture.large}" alt="${employee.name.first} ${employee.name.last}">
-           <a href="#" class="previous">&laquo;</a>
-           <a href="#" class="next">&raquo;</a>
-           <div class="info">
-             <h2>${employee.name.first} ${employee.name.last}</h2>
-             <span>${employee.email}</span>
-             <span>${employee.location.city}</span>
-           </div>
-           <div class="extra-info">
-             <hr>
-             <p>${employee.phone}</p>
-             <p>${employee.location.street} , ${employee.location.state} ${employee.location.postcode}</p>
-           </div>
+       <button title="close" type="button" class="close">&times;</button>
+       <img src="${employee.picture.large}" alt="${employee.name.first} ${employee.name.last}">
+       <a href="#" class="previous">&laquo;</a>
+       <a href="#" class="next">&raquo;</a>
+       <div class="info">
+         <h2>${employee.name.first} ${employee.name.last}</h2>
+         <span>${employee.email}</span>
+         <span>${employee.location.city}</span>
+       </div>
+       <div class="extra-info">
+         <hr>
+         <p>${employee.cell}</p>
+         <p class="street">${employee.location.street}, ${employee.location.state} ${employee.location.postcode}</p>
+         <p>Birthday: ${month}/${day}/${year}</p>
+       </div>
     `;
     modal.style.display = "block";
 };
@@ -109,7 +114,7 @@ function getIndex() {
 
 function previous() {
   if(index === 0){
-    return false
+    return false;
   } else {
     index--;
     getIndex()
@@ -118,7 +123,7 @@ function previous() {
 
 function next() {
   if(index === 11){
-    return false
+    return false;
   }else {
     index++;
     getIndex()

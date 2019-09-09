@@ -57,7 +57,7 @@ const modal = document.getElementById("myModal");
 const modalContent = document.querySelector('.modal-content');
 
 
-
+// GETS INDEX OF CONTAINER CLICKED
 function getContainerIndex() {
   const btn = event.target.closest('.employeeContainer');
   index = btn.getAttribute("data-index");
@@ -66,6 +66,7 @@ function getContainerIndex() {
   }
 }
 
+// USES INDEX OF CONTAINER CLICKED TO UPDATE MODAL INFO
 function createModal(index) {
     let employee = info[index];
     modalContent.innerHTML =
@@ -101,6 +102,39 @@ document.addEventListener('click', (e) => {
 
 
 
+// PREVIOUS AND NEXT BUTTONS
+function getIndex() {
+  createModal(index)
+}
+
+function previous() {
+  if(index === 0){
+    return false
+  } else {
+    index--;
+    getIndex()
+  }
+}
+
+function next() {
+  if(index === 11){
+    return false
+  }else {
+    index++;
+    getIndex()
+  }
+}
+
+modalContent.addEventListener('click', (e) => {
+  if (e.target.className === 'previous') {
+    previous();
+  } else if (e.target.className === 'next') {
+    next();
+  }
+});
+
+
+
 // CLOSING THE MODAL
 window.onclick = function(event) {
   if (event.target.tagName === 'BUTTON') {
@@ -109,4 +143,4 @@ window.onclick = function(event) {
   }
 }
 
-employeeList.addEventListener('click', getContainerIndex)
+employeeList.addEventListener('click', getContainerIndex);

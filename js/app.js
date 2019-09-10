@@ -4,6 +4,8 @@ let employees = [];
 let info = [];
 let index;
 
+const input = document.getElementById('search');
+
 // ---------------------------------------------------------------------------
 // FETCH FUNCTION
 // ---------------------------------------------------------------------------
@@ -80,7 +82,7 @@ function createModal(index) {
        <a href="#" class="previous">&laquo;</a>
        <a href="#" class="next">&raquo;</a>
        <div class="info">
-         <h2>${employee.name.first} ${employee.name.last}</h2>
+         <h2 class="names">${employee.name.first} ${employee.name.last}</h2>
          <span>${employee.email}</span>
          <span>${employee.location.city}</span>
        </div>
@@ -149,3 +151,34 @@ window.onclick = function(event) {
 }
 
 employeeList.addEventListener('click', getContainerIndex);
+
+//------------------------------------------------------------------
+// EMPLOYEE SEARCH
+//------------------------------------------------------------------
+
+function employeeSearch() {
+  const filter = input.value.toUpperCase();
+  const employee = employeeList.getElementsByTagName('section');
+  let name;
+  let txtValue;
+
+  for (let i = 0; i < employee.length; i++) {
+    name = employee[i].getElementsByTagName('h2')[0];
+    txtValue = name.textContent || name.innerText;
+    if (txtValue.toUpperCase().indexOf(filter > -1)) {
+      employee[i].style.display = "";
+    } else {
+      employee[i].style.display = "none";
+    }
+  }
+}
+
+input.addEventListener('keyup', employeeSearch);
+
+
+
+
+
+
+
+///////

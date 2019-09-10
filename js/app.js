@@ -1,6 +1,5 @@
 const randomUsers = 'https://randomuser.me/api/';
 const employeeList = document.getElementById('employeeDirectory');
-let employees = [];
 let info = [];
 let index;
 
@@ -22,7 +21,7 @@ Promise.all([
   /// INSERT MORE FETCH REQUESTS HERE
 ])
 .then(data => {
-  employees = data[0];
+  const employees = data[0];
   generateHTML(employees);
 })
 

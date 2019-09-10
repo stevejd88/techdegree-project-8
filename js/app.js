@@ -46,7 +46,6 @@ function generateHTML(data) {
        <span>${info[i].location.city}</span>
      </div>
      </div>`;
-     // console.log(html);
      section.innerHTML = html;
    };
 }
@@ -165,7 +164,7 @@ function employeeSearch() {
   for (let i = 0; i < employee.length; i++) {
     name = employee[i].getElementsByTagName('h2')[0];
     txtValue = name.textContent || name.innerText;
-    if (txtValue.toUpperCase().indexOf(filter > -1)) {
+    if (txtValue.toUpperCase().indexOf(filter) === 0) {
       employee[i].style.display = "";
     } else {
       employee[i].style.display = "none";

@@ -61,6 +61,7 @@ img {
   margin-bottom: auto;
   margin-right: 10px;
   margin-left: 15px;
+  border: solid 1px black;
 }
 
 h2 {
